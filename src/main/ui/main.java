@@ -21,8 +21,15 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class main extends Application {
-    public static final int WINDOW_WIDTH = 1280;
-    public static final int WINDOW_HEIGHT = 720;
+    // Set Game Properties
+    public static final int WINDOW_WIDTH = 800;
+    public static final int WINDOW_HEIGHT = 600;
+    public static final int GAME_WIDTH = WINDOW_WIDTH / 10;
+    public static final int GAME_HEIGHT = WINDOW_HEIGHT / 10;
+
+    // Arrow Position
+    public static final int ARROW_UP = 1;
+
 
     private Stage mainWindow;
     private Scene mainMenu;
@@ -45,8 +52,7 @@ public class main extends Application {
         VBox titleArea = new VBox();
         VBox buttonArea = new VBox();
         HBox optionsArea = new HBox();
-        Button SinglePlayer = new Button("SinglePlayer");
-        Button Computer = new Button("Computer");
+        Button SinglePlayer = new Button("Play Game");
 
         // Label Properties
         Label titleLabel = new Label("Snake Game");
@@ -60,7 +66,7 @@ public class main extends Application {
 
         // HBox for buttons
         optionsArea.setSpacing(10);
-        optionsArea.getChildren().addAll(SinglePlayer, Computer);
+        optionsArea.getChildren().add(SinglePlayer);
         optionsArea.setAlignment(Pos.CENTER);
 
         // Set entire scene
