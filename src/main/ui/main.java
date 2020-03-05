@@ -1,6 +1,8 @@
 package ui;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -12,13 +14,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import model.Food;
 
 public class main extends Application {
     // Set Game Properties
@@ -28,10 +28,11 @@ public class main extends Application {
     public static final int GAME_WIDTH = WINDOW_WIDTH / PIXEL_SIZE;
     public static final int GAME_HEIGHT = WINDOW_HEIGHT / PIXEL_SIZE;
 
-    // Buttons
+    // Game Map
+    private int[] xCoord = new int[GAME_WIDTH];
+    private int[] yCoord = new int[GAME_HEIGHT];
 
-
-
+    // Scene
     private Stage mainWindow;
     private Scene mainMenu;
     private Scene mainGame;
@@ -44,6 +45,7 @@ public class main extends Application {
     public void start(Stage primaryStage) throws Exception {
         mainWindow = primaryStage;
         initMenuScene();
+        initGameScene();
         mainWindow.setTitle("Snake Game");
         mainWindow.setScene(mainMenu);
         mainWindow.show();
@@ -54,7 +56,7 @@ public class main extends Application {
         VBox titleArea = new VBox();
         VBox buttonArea = new VBox();
         HBox optionsArea = new HBox();
-        Button SinglePlayer = new Button("Play Game");
+        Button singlePlayer = new Button("Play Game");
 
         // Label Properties
         Label titleLabel = new Label("Snake Game");
@@ -68,8 +70,17 @@ public class main extends Application {
 
         // HBox for buttons
         optionsArea.setSpacing(10);
-        optionsArea.getChildren().add(SinglePlayer);
+        optionsArea.getChildren().add(singlePlayer);
         optionsArea.setAlignment(Pos.CENTER);
+
+        // Actions for button
+        singlePlayer.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                mainWindow.setScene(mainGame);
+                mainWindow.show();
+            }
+        });
 
         // Set entire scene
         buttonArea.getChildren().add(optionsArea);
@@ -77,5 +88,16 @@ public class main extends Application {
         titleScreen.setPadding(new Insets(10));
 
         mainMenu = new Scene(titleScreen, WINDOW_WIDTH, WINDOW_HEIGHT);
+    }
+
+    private void initGameScene() {
+        Pane gameScreen = new Pane();
+        // Initialize game counter
+        Thread game;
+
+        Food food = new Food();
+        gameScreen.getChildren().add(food.getFood());
+
+        mainGame = new Scene(gameScreen, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
 }
