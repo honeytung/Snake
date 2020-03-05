@@ -24,15 +24,17 @@ public class main extends Application {
     // Set Game Properties
     public static final int WINDOW_WIDTH = 800;
     public static final int WINDOW_HEIGHT = 600;
-    public static final int GAME_WIDTH = WINDOW_WIDTH / 10;
-    public static final int GAME_HEIGHT = WINDOW_HEIGHT / 10;
+    public static final int PIXEL_SIZE = 10;
+    public static final int GAME_WIDTH = WINDOW_WIDTH / PIXEL_SIZE;
+    public static final int GAME_HEIGHT = WINDOW_HEIGHT / PIXEL_SIZE;
 
-    // Arrow Position
-    public static final int ARROW_UP = 1;
+    // Buttons
+
 
 
     private Stage mainWindow;
     private Scene mainMenu;
+    private Scene mainGame;
 
     public static void main(String[] args) {
         launch(args);
