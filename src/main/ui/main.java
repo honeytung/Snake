@@ -1,5 +1,6 @@
 package ui;
 
+import javafx.scene.paint.Color;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -15,6 +16,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -37,6 +39,13 @@ public class main extends Application {
     private Scene mainMenu;
     private Scene mainGame;
 
+    // Game counter using new thread
+    Thread game;
+    boolean gameOver = true;
+
+    // Food
+    Food food;
+
     public static void main(String[] args) {
         launch(args);
     }
@@ -44,6 +53,8 @@ public class main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         mainWindow = primaryStage;
+        mainWindow.setOnCloseRequest(event -> gameOver = true);
+
         initMenuScene();
         initGameScene();
         mainWindow.setTitle("Snake Game");
@@ -79,6 +90,20 @@ public class main extends Application {
             public void handle(ActionEvent event) {
                 mainWindow.setScene(mainGame);
                 mainWindow.show();
+                gameOver = false;
+
+                game = new Thread(() -> {
+                    while (!gameOver) {
+                        food.generateNewFood();
+                        try {
+                            Thread.sleep(100);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                game.start();
+
             }
         });
 
@@ -92,11 +117,11 @@ public class main extends Application {
 
     private void initGameScene() {
         Pane gameScreen = new Pane();
-        // Initialize game counter
-        Thread game;
+        food = new Food();
 
-        Food food = new Food();
         gameScreen.getChildren().add(food.getFood());
+
+        // Initialize game counter
 
         mainGame = new Scene(gameScreen, WINDOW_WIDTH, WINDOW_HEIGHT);
     }
