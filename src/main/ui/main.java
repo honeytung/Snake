@@ -21,18 +21,15 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import model.Food;
+import model.GameMap;
 
 public class main extends Application {
     // Set Game Properties
     public static final int WINDOW_WIDTH = 800;
     public static final int WINDOW_HEIGHT = 600;
-    public static final int PIXEL_SIZE = 10;
+    public static final int PIXEL_SIZE = 50;
     public static final int GAME_WIDTH = WINDOW_WIDTH / PIXEL_SIZE;
     public static final int GAME_HEIGHT = WINDOW_HEIGHT / PIXEL_SIZE;
-
-    // Game Map
-    private int[] xCoord = new int[GAME_WIDTH];
-    private int[] yCoord = new int[GAME_HEIGHT];
 
     // Scene
     private Stage mainWindow;
@@ -40,11 +37,14 @@ public class main extends Application {
     private Scene mainGame;
 
     // Game counter using new thread
-    Thread game;
-    boolean gameOver = true;
+    private Thread game;
+    private boolean gameOver = true;
 
     // Food
-    Food food;
+    private Food food;
+
+    // Game Map
+    private GameMap gameMap;
 
     public static void main(String[] args) {
         launch(args);
@@ -96,7 +96,7 @@ public class main extends Application {
                     while (!gameOver) {
                         food.generateNewFood();
                         try {
-                            Thread.sleep(100);
+                            Thread.sleep(1000);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
@@ -117,6 +117,7 @@ public class main extends Application {
 
     private void initGameScene() {
         Pane gameScreen = new Pane();
+        gameMap = new GameMap(gameScreen);
         food = new Food();
 
         gameScreen.getChildren().add(food.getFood());

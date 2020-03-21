@@ -17,18 +17,18 @@ public class Food {
 
         // Set initial randomized position
         food.setFill(Color.RED);
-        food.setStroke(Color.RED);
+        food.setStroke(Color.BLACK);
         food.setVisible(true);
-        foodLocation[0] = random.nextInt(main.WINDOW_WIDTH);
-        foodLocation[1] = random.nextInt(main.WINDOW_HEIGHT);
+        foodLocation[0] = random.nextInt(main.GAME_WIDTH) * main.PIXEL_SIZE;
+        foodLocation[1] = random.nextInt(main.GAME_HEIGHT) * main.PIXEL_SIZE;
 
         food.setTranslateX(foodLocation[0]);
         food.setTranslateY(foodLocation[1]);
     }
 
     public void generateNewFood() {
-        foodLocation[0] = random.nextInt(main.WINDOW_WIDTH);
-        foodLocation[1] = random.nextInt(main.WINDOW_HEIGHT);
+        foodLocation[0] = random.nextInt(main.GAME_WIDTH) * main.PIXEL_SIZE;
+        foodLocation[1] = random.nextInt(main.GAME_HEIGHT) * main.PIXEL_SIZE;
 
         food.setTranslateX(foodLocation[0]);
         food.setTranslateY(foodLocation[1]);
